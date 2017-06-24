@@ -33,13 +33,13 @@ p {
 }
 
 .exes {
-    background-image: url(images/ex.png);
+    background-image: url(../images/ex.png);
     background-size: cover;
     border: 4px solid #BD10E0;
 }
 
 .ohs {
-    background-image: url(images/oh.png);
+    background-image: url(../images/oh.png);
     background-size: cover;
     border: 4px solid #7ED321;
 }
