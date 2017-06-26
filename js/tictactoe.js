@@ -1,3 +1,6 @@
+var instructions = document.getElementById("instructions");
+var player = 0;
+    
 document.body.onload = createGame(9);
 
 function createGame(size){
@@ -16,25 +19,41 @@ function createGame(size){
             board.appendChild(div);
         }
     }
+    
+    setInstructions();
 }
 
 function clicked(e){
     var thisSquare = document.getElementById(this.name);
     setSquareStyle(thisSquare);
+    switchPlayer();
+    setInstructions();
 }
 
 function setSquareStyle(square){
-    var styles = ["empty", "exes", "ohs"];
-    for (var i = 0; i < styles.length; i++){
-        if(square.classList.contains(styles[i])) {
-            square.classList.remove(styles[i]);
-            if(i == styles.length - 1) {
-                square.classList.add(styles[0]);
-            } else {
-            square.classList.add(styles[i+1]);
-            }
-            break;
+    if(square.classList.contains("empty")){
+        square.classList.remove("empty");
+        if(player === 0) {
+            square.classList.add("exes");
+        } else {
+            square.classList.add("ohs");
         }
-    } 
+    }
 }
 
+function setInstructions(){
+    if(player === 0){
+        instructions.textContent = "Place your X, player 1!";        
+    } else {
+        instructions.textContent = "Place your O, player 2!";        
+    }
+}
+
+function switchPlayer(){
+    if(player === 0){
+        player = 1;
+    } else {
+        player = 0;
+    }
+    return player;
+}
