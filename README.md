@@ -1,5 +1,5 @@
 # tictactoe
-Simple tic-tac-toe board! One click for X, two clicks for O. In the future, it would be great to add a lot of things, like:
+Simple tic-tac-toe board! Now wowrking on adding:
 * scoring
 * players
 * fancy sound effects or animations
