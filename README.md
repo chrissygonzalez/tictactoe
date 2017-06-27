@@ -1,5 +1,4 @@
 # tictactoe
-Simple tic-tac-toe board! Now wowrking on adding:
-* scoring
+Simple tic-tac-toe board! Now working on adding:
 * players
-* fancy sound effects or animations
+* improved experience
