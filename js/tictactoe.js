@@ -65,4 +65,34 @@ function setInstructions(char, num){
 function updateGameStatus(square, char){
     var squareStr = square.name;
     gameStatus[squareStr.substr(6, 1)][squareStr.substr(7,1)] = char;
+    scoreChecker();
 }
+
+function scoreChecker(){
+    var row1 = [gameStatus[0][0], gameStatus[0][1], gameStatus[0][2]];
+    var row2 = [gameStatus[1][0], gameStatus[1][1], gameStatus[1][2]];
+    var row3 = [gameStatus[2][0], gameStatus[2][1], gameStatus[2][2]];
+    var col1 = [gameStatus[0][0], gameStatus[1][0], gameStatus[2][0]];
+    var col2 = [gameStatus[0][1], gameStatus[1][1], gameStatus[2][1]];
+    var col3 = [gameStatus[0][2], gameStatus[1][2], gameStatus[2][2]];
+    var diag1 = [gameStatus[0][0], gameStatus[1][1], gameStatus[2][2]];
+    var diag2 = [gameStatus[2][0], gameStatus[1][1], gameStatus[0][2]];
+    var waysToWin = [row1, row2, row3, col1, col2, col3, diag1, diag2];
+    for(var i = 0; i < waysToWin.length; i++){
+        scoreGame(waysToWin[i]);
+    }
+}
+
+function scoreGame(arr){
+    if( arr[0] === "X" &&
+        arr[1] === "X" &&
+        arr[2] === "X"){
+        console.log("X wins!");
+    } else if (
+        arr[0] === "O" &&
+        arr[1] === "O" &&
+        arr[2] === "O"){
+        console.log("O wins!");
+    }
+}
+
