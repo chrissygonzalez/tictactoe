@@ -23,7 +23,6 @@ function createGame(size){
             }
         }
     }
-    setInstructions("X", 1);
 }
 
 function clicked(e){
@@ -36,12 +35,10 @@ function checkSquare(square){
         if(player === 0){
             setSquareStyle(square, "exes");
             switchPlayer(1);
-            setInstructions("O", 2);
             updateGameStatus(square, "X");
         } else {
             setSquareStyle(square, "ohs");
             switchPlayer(0);
-            setInstructions("X", 1);
             updateGameStatus(square, "O");
         }
     }
@@ -57,9 +54,22 @@ function switchPlayer(num){
     return player;
 }
 
-function setInstructions(char, num){
-    var instructions = document.getElementById("instructions");
-    instructions.textContent = "Place your " + char + ", player " + num + "!";        
+function declareWinner(winner){
+    var outcome = document.getElementById("outcome");
+    var board = document.getElementById("board");
+    var squareList = board.childNodes;
+    
+    outcome.textContent = winner + " wins!";
+    if(winner == "X"){
+        outcome.classList.add("extext");
+    } else {
+        outcome.classList.add("ohtext");
+    }
+    for(var i = 0; i < squareList.length; i++){
+        squareList[i].removeEventListener("click", clicked, false);
+        squareList[i].classList.remove("empty");
+        squareList[i].classList.add("border");
+    }
 }
 
 function updateGameStatus(square, char){
@@ -87,12 +97,12 @@ function scoreGame(arr){
     if( arr[0] === "X" &&
         arr[1] === "X" &&
         arr[2] === "X"){
-        console.log("X wins!");
+        declareWinner("X");
     } else if (
         arr[0] === "O" &&
         arr[1] === "O" &&
         arr[2] === "O"){
-        console.log("O wins!");
+        declareWinner("O");
     }
 }
 
