@@ -1,37 +1,44 @@
 var gameStatus = [];
 var player = 0;
     
-document.body.onload = createGame(3);
+document.body.onload = initGame();
 
-function createGame(size){
-    drawBoard(size);
+function initGame(){
+    var onePlayerbtn = document.getElementById("1player");
+    var twoPlayerbtn = document.getElementById("2player");
+    var content = document.getElementsByClassName("content")[0];
+    onePlayerbtn.addEventListener("click", function(){
+        content.removeChild(this);
+        content.removeChild(twoPlayerbtn);
+        drawBoard(3);}, false);
+    twoPlayerbtn.addEventListener("click", function(){
+        content.removeChild(this);
+        content.removeChild(onePlayerbtn);
+        drawBoard(3);}, false);
+}
 
-    function drawBoard(size){
-        var board = document.getElementById("board");
-        for (var i = 0; i < size; i++){
-            var row = [];
-            gameStatus.push(row);
-            for (var j = 0; j < size; j++){
-                var div = document.createElement("div");
-                var squarename = "square" + i + j;    
-                div.name = squarename;
-                div.setAttribute("id", squarename);
-                div.classList.add("empty", "square");
-                div.addEventListener("click", clicked, false);
-                board.appendChild(div);
-                gameStatus[i].push("E");
-            }
+function drawBoard(size){
+    var board = document.getElementById("board");
+    for (var i = 0; i < size; i++){
+        var row = [];
+        gameStatus.push(row);
+        for (var j = 0; j < size; j++){
+            var div = document.createElement("div");
+            var squarename = "square" + i + j;    
+            div.name = squarename;
+            div.setAttribute("id", squarename);
+            div.classList.add("empty", "square");
+            div.addEventListener("click", checkSquare, false);
+            board.appendChild(div);
+            gameStatus[i].push("E");
         }
     }
 }
 
-function clicked(e){
-    var thisSquare = document.getElementById(this.name);
-    checkSquare(thisSquare);
-}
-
-function checkSquare(square){
-    if(square.classList.contains("empty")){
+function checkSquare(){
+    var square = this;
+    var squareStr = this.name;
+    if(gameStatus[squareStr.substr(6, 1)][squareStr.substr(7,1)] == "E"){
         if(player === 0){
             setSquareStyle(square, "exes");
             switchPlayer(1);
@@ -52,24 +59,6 @@ function setSquareStyle(square, style){
 function switchPlayer(num){
     player = num;
     return player;
-}
-
-function declareWinner(winner){
-    var outcome = document.getElementById("outcome");
-    var board = document.getElementById("board");
-    var squareList = board.childNodes;
-    
-    outcome.textContent = winner + " wins!";
-    if(winner == "X"){
-        outcome.classList.add("extext");
-    } else {
-        outcome.classList.add("ohtext");
-    }
-    for(var i = 0; i < squareList.length; i++){
-        squareList[i].removeEventListener("click", clicked, false);
-        squareList[i].classList.remove("empty");
-        squareList[i].classList.add("border");
-    }
 }
 
 function updateGameStatus(square, char){
@@ -106,3 +95,21 @@ function scoreGame(arr){
     }
 }
 
+function declareWinner(winner){
+    var outcome = document.getElementById("outcome");
+    var board = document.getElementById("board");
+    var squareList = board.childNodes;
+    
+    outcome.textContent = winner + " wins!";
+    if(winner == "X"){
+        outcome.classList.add("extext");
+    } else {
+        outcome.classList.add("ohtext");
+    }
+    for(var i = 0; i < squareList.length; i++){
+       // squareList[i].removeEventListener("click", null, false);
+        squareList[i].removeEventListener("click", checkSquare, false);
+        squareList[i].classList.remove("empty");
+        squareList[i].classList.add("border");
+    }
+}
